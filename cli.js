@@ -9,14 +9,28 @@ const ui = importJsx('./ui');
 
 const cli = meow(`
 	Usage
-	  $ my-ink-cli
+	  $ fuck
 
 	Options
-		--name  Your name
+		--man
 
 	Examples
-	  $ my-ink-cli --name=Jane
-	  Hello, Jane
+		$ fuck
+		$ fuck --help
+		$ fuck --man
+
+	KeyPress
+		leftArrow: go to previous page
+
+		rightArrow: go to next page
+
+		upArrow/downArrow: filter list by fund type
+
+		upArrow/downArrow: highlight list item in tab
+
+		enter: select a fund to your shopping cart
+
+		q: exit
 `);
 
 render(React.createElement(ui, cli.flags));

@@ -13,7 +13,8 @@
 	},
 	"files": [
 		"cli.js",
-		"ui.js"
+		"ui.js",
+		"lib/*"
 	],
 	"dependencies": {
 		"axios": "^0.20.0",
