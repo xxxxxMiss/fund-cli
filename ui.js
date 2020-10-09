@@ -10,7 +10,7 @@ const {
 	useInput,
 	useApp,
 	useFocus,
-	useFocusManager
+	useFocusManager,
 } = require("ink");
 const Gradient = require("ink-gradient");
 const BigText = require("ink-big-text");
@@ -19,8 +19,8 @@ const { Tabs, Tab } = require("ink-tab");
 const TextInput = require("ink-text-input").default;
 const { post } = require("./lib/request");
 const { fundTypes, fundCompany } = require("./lib/params");
-const figures = require('figures')
-const { saveSelected, getSelected } = require('./lib/selected')
+const figures = require("figures");
+const { saveSelected, getSelected } = require("./lib/selected");
 
 const App = ({ name = "Stranger" }) => {
 	const { exit } = useApp();
@@ -28,10 +28,7 @@ const App = ({ name = "Stranger" }) => {
 	const [pageIndex, setPageIndex] = useState(1);
 	const [keyword, setKeyword] = useState("");
 	const [row, setRow] = useState(-1);
-	const [selected, setSelected] = useState(async () => {
-		const st = await getSelected()
-		return st
-	});
+	const [selected, setSelected] = useState(new Set());
 	const [currentPanel, setCurrentPanel] = useState(0);
 
 	useEffect(() => {
@@ -49,15 +46,21 @@ const App = ({ name = "Stranger" }) => {
 		fetchList();
 	}, [pageIndex]);
 
+	useEffect(() => {
+		(async () => {
+			setSelected(await getSelected());
+		})();
+	}, []);
+
 	const handleSelect = (item) => {
 		// `item` = { label: 'First', value: 'first' }
 	};
 
-	const { isFocused } = useFocus()
+	const { isFocused } = useFocus();
 
 	useInput((input, key) => {
 		if (input === "q") {
-			saveSelected(selected)
+			saveSelected(selected);
 			exit();
 		}
 		if (key.leftArrow) {
@@ -105,12 +108,11 @@ const App = ({ name = "Stranger" }) => {
 	});
 
 	useEffect(() => {
-		console.log('=========', isFocused)
-	}, [isFocused])
+		console.log("=========", isFocused);
+	}, [isFocused]);
 
 	const handleTabChange = (name, activeTab) => {};
 
-		console.log('-----------', isFocused)
 	return (
 		<>
 			{/*<Box width="100%" justifyContent="center" marginBottom={2}>
@@ -133,7 +135,11 @@ const App = ({ name = "Stranger" }) => {
 						/>
 					</Box>*/}
 					<Box marginBottom={1}>
-						<SelectInput isFocused={isFocused} items={fundTypes} onSelect={handleSelect} />
+						<SelectInput
+							isFocused={isFocused}
+							items={fundTypes}
+							onSelect={handleSelect}
+						/>
 					</Box>
 					<Box marginBottom={2} isFocused={isFocused}>
 						<Tabs onChange={handleTabChange} isFocused={isFocused}>
