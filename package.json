@@ -18,6 +18,7 @@
 	],
 	"dependencies": {
 		"axios": "^0.20.0",
+		"figures": "^3.2.0",
 		"import-jsx": "^4.0.0",
 		"ink": "^3.0.6",
 		"ink-big-text": "^1.2.0",

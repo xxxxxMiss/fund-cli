@@ -9,6 +9,8 @@ const {
 	useStdout,
 	useInput,
 	useApp,
+	useFocus,
+	useFocusManager
 } = require("ink");
 const Gradient = require("ink-gradient");
 const BigText = require("ink-big-text");
@@ -17,6 +19,8 @@ const { Tabs, Tab } = require("ink-tab");
 const TextInput = require("ink-text-input").default;
 const { post } = require("./lib/request");
 const { fundTypes, fundCompany } = require("./lib/params");
+const figures = require('figures')
+const { saveSelected, getSelected } = require('./lib/selected')
 
 const App = ({ name = "Stranger" }) => {
 	const { exit } = useApp();
@@ -24,7 +28,10 @@ const App = ({ name = "Stranger" }) => {
 	const [pageIndex, setPageIndex] = useState(1);
 	const [keyword, setKeyword] = useState("");
 	const [row, setRow] = useState(-1);
-	const [selected, setSelected] = useState(new Set());
+	const [selected, setSelected] = useState(async () => {
+		const st = await getSelected()
+		return st
+	});
 	const [currentPanel, setCurrentPanel] = useState(0);
 
 	useEffect(() => {
@@ -46,8 +53,11 @@ const App = ({ name = "Stranger" }) => {
 		// `item` = { label: 'First', value: 'first' }
 	};
 
+	const { isFocused } = useFocus()
+
 	useInput((input, key) => {
 		if (input === "q") {
+			saveSelected(selected)
 			exit();
 		}
 		if (key.leftArrow) {
@@ -94,8 +104,13 @@ const App = ({ name = "Stranger" }) => {
 		}
 	});
 
+	useEffect(() => {
+		console.log('=========', isFocused)
+	}, [isFocused])
+
 	const handleTabChange = (name, activeTab) => {};
 
+		console.log('-----------', isFocused)
 	return (
 		<>
 			{/*<Box width="100%" justifyContent="center" marginBottom={2}>
@@ -118,10 +133,10 @@ const App = ({ name = "Stranger" }) => {
 						/>
 					</Box>*/}
 					<Box marginBottom={1}>
-						<SelectInput items={fundTypes} onSelect={handleSelect} />
+						<SelectInput isFocused={isFocused} items={fundTypes} onSelect={handleSelect} />
 					</Box>
-					<Box marginBottom={2}>
-						<Tabs onChange={handleTabChange}>
+					<Box marginBottom={2} isFocused={isFocused}>
+						<Tabs onChange={handleTabChange} isFocused={isFocused}>
 							{fundCompany.map((item) => (
 								<Tab key={item.name} name={item.name}>
 									{item.value}
@@ -129,10 +144,10 @@ const App = ({ name = "Stranger" }) => {
 							))}
 						</Tabs>
 					</Box>
-					<Box flexDirection="column" width="100%">
-						<Box width="100%">
-							<Box width="30%">
-								<Text>基金名称</Text>
+					<Box flexDirection="column" marginTop={1}>
+						<Box width="100%" justifyContent="space-between">
+							<Box width="20%">
+								<Text>基基金名称金名称</Text>
 							</Box>
 							<Box width="10%">
 								<Text>净值</Text>
@@ -150,18 +165,18 @@ const App = ({ name = "Stranger" }) => {
 								<Text>近6月</Text>
 							</Box>
 							<Box width="10%">
-								<Text>近一年</Text>
+								<Text>近1年</Text>
 							</Box>
-							<Box width="5%">
+							<Box width="10%">
 								<Text>今年来</Text>
 							</Box>
-							<Box width="5%">
-								<Text>操作</Text>
+							<Box width="10%">
+								<Text>自选</Text>
 							</Box>
 						</Box>
 						{list.map((item, index) => (
 							<Box marginTop={1} key={item.code} width="100%">
-								<Box width="30%">
+								<Box width="20%">
 									<Text
 										backgroundColor={row == index ? "#e6f7ff" : undefined}
 										color="blue"
@@ -217,7 +232,7 @@ const App = ({ name = "Stranger" }) => {
 										{item.lastYearGrowth + "%"}
 									</Text>
 								</Box>
-								<Box width="5%">
+								<Box width="10%">
 									<Text
 										backgroundColor={row == index ? "#e6f7ff" : undefined}
 										color={item.thisYearGrowth < 0 ? "green" : "red"}
@@ -225,9 +240,9 @@ const App = ({ name = "Stranger" }) => {
 										{item.thisYearGrowth + "%"}
 									</Text>
 								</Box>
-								<Box width="5%">
+								<Box width="10%">
 									<Text color={"green"}>
-										{selected.has(item.code) ? "已选" : "无"}
+										{selected.has(item.code) ? figures.tick : figures.cross}
 									</Text>
 								</Box>
 							</Box>
