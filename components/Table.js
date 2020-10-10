@@ -1,8 +1,31 @@
 const React = require("react");
 const { useState, useEffect, useRef } = require("react");
-const { Box, Text } = require("ink");
+const { Box, Text, useInput } = require("ink");
 
-const Table = ({ columns, data }) => {
+const Table = ({ columns, data, onRow }) => {
+	const [row, setRow] = useState(-1);
+
+	useInput((input, key) => {
+		if (key.upArrow) {
+			setRow((prev) => {
+				const newVal = prev < 0 ? prev : prev - 1;
+				if (newVal >= 0 && newVal < data.length) {
+					onRow(newVal)
+				}
+				return newVal
+			});
+		}
+		if (key.downArrow) {
+			setRow((prev) => {
+				const newVal = prev < 10 ? prev + 1 : prev;
+				if (newVal >= 0 && newVal < data.length) {
+					onRow(newVal)
+				}
+				return newVal
+			});
+		}
+	});
+
 	return (
 		<Box flexDirection="column" width="100%">
 			<Box width="100%" marginBottom={1}>
@@ -23,6 +46,7 @@ const Table = ({ columns, data }) => {
 									) : (
 										<Text
 											wrap="truncate"
+											backgroundColor={row === index ? "#666" : undefined}
 											color={
 												i === 0
 													? "blue"

@@ -9,7 +9,7 @@ const figures = require("figures");
 const FundRank = (props) => {
 	const [list, setList] = useState([]);
 	const [pageIndex, setPageIndex] = useState(1);
-	const [row, setRow] = useState(-1);
+	const [row, setRow] = useState(0)
 
 	useEffect(() => {
 		const fetchList = async () => {
@@ -19,7 +19,6 @@ const FundRank = (props) => {
 					pageSize: 10,
 				});
 				setList(data.rank);
-				console.log('--data--', data.rank)
 			} catch (e) {
 				console.error(e);
 			}
@@ -28,24 +27,14 @@ const FundRank = (props) => {
 	}, [pageIndex]);
 
 	useInput((input, key) => {
-		if (key.upArrow) {
-			setRow((prev) => {
-				return prev < 0 ? prev : prev - 1;
-			});
-		}
-		if (key.downArrow) {
-			setRow((prev) => {
-				return prev < 10 ? prev + 1 : prev;
-			});
-		}
 		if (key.return && list[row]) {
-			setSelected((prev) => {
+			props.setSelected((prev) => {
 				prev.add(list[row].code);
 				return new Set(prev.values());
 			});
 		}
-		if (key.delete && list[row] && selected.has(list[row].code)) {
-			setSelected((prev) => {
+		if (key.delete && list[row] && props.selected.has(list[row].code)) {
+			props.setSelected((prev) => {
 				prev.delete(list[row].code);
 				return new Set(prev.values());
 			});
@@ -108,14 +97,17 @@ const FundRank = (props) => {
 			title: "自选",
 			width: '10%',
 			key: 'operation',
-			render: () => {
+			render: (item) => {
+				if (props.selected.has(item.code)) {
+					return <Text color="#87d068">{figures.tick}</Text>
+				}
 				return <Text>{figures.cross}</Text>
 			}
 		},
 	];
 	return (
 		<Box>
-			<Table columns={columns} data={list} />
+			<Table columns={columns} data={list} onRow={setRow} />
 		</Box>
 	);
 };
