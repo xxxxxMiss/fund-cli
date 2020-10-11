@@ -3,7 +3,7 @@
 	"version": "0.0.0",
 	"license": "MIT",
 	"bin": {
-		"fuck": "cli.js"
+		"fund": "cli.js"
 	},
 	"engines": {
 		"node": ">=10"

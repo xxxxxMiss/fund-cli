@@ -24,13 +24,13 @@ const cli = meow(`
 
 		rightArrow: go to next page
 
-		upArrow/downArrow: filter list by fund type
-
 		upArrow/downArrow: highlight list item in tab
 
-		enter: select a fund to your shopping cart
+		space: toggle selecting a fund to your shopping cart
 
-		q: exit
+		enter: search fund by fund-code and add to your shopping cart
+
+		q/Ctrl+C: exit
 `);
 
 render(React.createElement(ui, cli.flags));
