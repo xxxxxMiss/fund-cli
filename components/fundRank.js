@@ -9,7 +9,7 @@ const figures = require("figures");
 const FundRank = (props) => {
 	const [list, setList] = useState([]);
 	const [pageIndex, setPageIndex] = useState(1);
-	const [row, setRow] = useState(0)
+	const [row, setRow] = useState(-1)
 
 	useEffect(() => {
 		const fetchList = async () => {
@@ -27,7 +27,7 @@ const FundRank = (props) => {
 	}, [pageIndex]);
 
 	useInput((input, key) => {
-		if (key.return && list[row]) {
+		if (input === ' ' && list[row]) {
 			if (props.selected.has(list[row].code)) {
 				props.setSelected((prev) => {
 					prev.delete(list[row].code);

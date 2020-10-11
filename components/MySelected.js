@@ -11,7 +11,7 @@ const MySelected = (props) => {
 	const [keyword, setKeyword] = useState("");
 	const [list, setList] = useState([]);
 	const [code, setCode] = useState("");
-	const [row, setRow] = useState(0);
+	const [row, setRow] = useState(-1);
 
 	const fetchList = async (code) => {
 		const res = await get("/fund", {
@@ -42,20 +42,29 @@ const MySelected = (props) => {
 	}, [code]);
 
 	useInput((input, key) => {
-		if (key.return && list[row]) {
-			if (props.selected.has(list[row].code)) {
+		let currentCode = null;
+		const codes = code.split(/[,，]/)
+		if (input === " " && list[row]) {
+			if (props.selected.has((currentCode = list[row].code))) {
 				props.setSelected((prev) => {
-					prev.delete(list[row].code);
+					if (codes.includes(currentCode)) {
+						setCode("");
+					}
+					prev.delete(currentCode);
 					return new Set(prev.values());
 				});
 			} else {
 				props.setSelected((prev) => {
-					prev.add(list[row].code);
+					prev.add(currentCode);
 					return new Set(prev.values());
 				});
 			}
 		}
 	});
+
+	const handleKeywordChange = (value) => {
+		setKeyword(value.replace(/[^0-9,，]/, '').replace('，', ','))
+	}
 
 	const columns = [
 		{
@@ -104,7 +113,7 @@ const MySelected = (props) => {
 				<TextInput
 					placeholder="输入基金代码查询"
 					value={keyword}
-					onChange={setKeyword}
+					onChange={handleKeywordChange}
 					onSubmit={(value) => setCode(value)}
 				/>
 			</Box>
