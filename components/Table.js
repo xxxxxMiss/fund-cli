@@ -40,7 +40,7 @@ const Table = ({ columns, data, onRow }) => {
 					<Box width="100%" key={index} marginBottom={1}>
 						{columns.map((it, i) => {
 							return (
-								<Box flexGrow={1} width={it.width}>
+								<Box flexGrow={1} width={it.width} key={it.dataIndex || it.key}>
 									{typeof it.render === "function" ? (
 										it.render(item, data, index)
 									) : (

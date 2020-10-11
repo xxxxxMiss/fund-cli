@@ -78,7 +78,7 @@ const App = ({ name = "Stranger" }) => {
 			<Category>
 				<FundRank selected={selected} setSelected={setSelected} />
 				<Box>
-					<MySelected />
+					<MySelected selected={selected} setSelected={setSelected} />
 				</Box>
 			</Category>
 		</>

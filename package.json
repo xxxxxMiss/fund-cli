@@ -28,6 +28,7 @@
 		"ink-tab": "^4.0.0",
 		"ink-table": "^2.0.1",
 		"ink-text-input": "^4.0.1",
+		"keypress": "^0.2.1",
 		"meow": "^7.1.1",
 		"react": "^16.13.1"
 	},

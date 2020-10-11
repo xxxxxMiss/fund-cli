@@ -28,16 +28,17 @@ const FundRank = (props) => {
 
 	useInput((input, key) => {
 		if (key.return && list[row]) {
-			props.setSelected((prev) => {
-				prev.add(list[row].code);
-				return new Set(prev.values());
-			});
-		}
-		if (key.delete && list[row] && props.selected.has(list[row].code)) {
-			props.setSelected((prev) => {
-				prev.delete(list[row].code);
-				return new Set(prev.values());
-			});
+			if (props.selected.has(list[row].code)) {
+				props.setSelected((prev) => {
+					prev.delete(list[row].code);
+					return new Set(prev.values());
+				});
+			} else {
+				props.setSelected((prev) => {
+					prev.add(list[row].code);
+					return new Set(prev.values());
+				});
+			}
 		}
 	});
 
