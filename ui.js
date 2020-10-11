@@ -20,8 +20,9 @@ const { Tabs, Tab } = require("ink-tab");
 const { fundTypes, fundCompany } = require("./lib/params");
 const { saveSelected, getSelected } = require("./lib/selected");
 const Category = importJsx("./components/Category");
-const MySelected = importJsx('./components/MySelected')
-const FundRank = importJsx('./components/fundRank')
+const MySelected = importJsx("./components/MySelected");
+const FundRank = importJsx("./components/fundRank");
+const Board = importJsx("./components/Board");
 
 const App = ({ name = "Stranger" }) => {
 	const { exit } = useApp();
@@ -77,9 +78,8 @@ const App = ({ name = "Stranger" }) => {
 			</Box>
 			<Category>
 				<FundRank selected={selected} setSelected={setSelected} />
-				<Box>
-					<MySelected selected={selected} setSelected={setSelected} />
-				</Box>
+				<MySelected selected={selected} setSelected={setSelected} />
+				<Board />
 			</Category>
 		</>
 	);
