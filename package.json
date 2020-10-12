@@ -1,6 +1,6 @@
 {
-	"name": "fuck-cli",
-	"version": "0.0.0",
+	"name": "@qschqd/fund-cli",
+	"version": "0.0.1",
 	"license": "MIT",
 	"bin": {
 		"fund": "cli.js"
@@ -14,7 +14,8 @@
 	"files": [
 		"cli.js",
 		"ui.js",
-		"lib/*"
+		"lib/*",
+		"components/*"
 	],
 	"dependencies": {
 		"axios": "^0.20.0",
