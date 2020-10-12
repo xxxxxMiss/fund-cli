@@ -6,7 +6,7 @@ const Table = ({ columns, data, onRow }) => {
 	const [row, setRow] = useState(-1);
 
 	useInput((input, key) => {
-		if (key.upArrow) {
+		if (input === 'k') {
 			setRow((prev) => {
 				const newVal = prev < 0 ? prev : prev - 1;
 				if (newVal >= 0 && newVal < data.length) {
@@ -15,7 +15,7 @@ const Table = ({ columns, data, onRow }) => {
 				return newVal
 			});
 		}
-		if (key.downArrow) {
+		if (input === 'j') {
 			setRow((prev) => {
 				const newVal = prev < 10 ? prev + 1 : prev;
 				if (newVal >= 0 && newVal < data.length) {

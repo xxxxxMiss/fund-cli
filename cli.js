@@ -9,26 +9,26 @@ const ui = importJsx('./ui');
 
 const cli = meow(`
 	Usage
-	  $ fuck
-
-	Options
-		--man
+	  $ fund
 
 	Examples
-		$ fuck
-		$ fuck --help
-		$ fuck --man
+		$ fund
+		$ fund --help
 
 	KeyPress
 		leftArrow: go to previous page
 
 		rightArrow: go to next page
 
-		upArrow/downArrow: highlight list item in tab
+		upArrow/downArrow: filter list by fund type
+
+		tab: select fund company and press enter key to filter list
+
+		j/k: highlight list item in tab
 
 		space: toggle selecting a fund to your shopping cart
 
-		enter: search fund by fund-code and add to your shopping cart
+		enter: input fund-code and add to your shopping cart
 
 		q/Ctrl+C: exit
 `);
