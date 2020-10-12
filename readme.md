@@ -5,7 +5,7 @@
 ## Install
 
 ```bash
-$ npm install -g fund-cli
+$ npm install -g @qschqd/fund-cli
 ```
 
 ## CLI

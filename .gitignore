@@ -33,3 +33,5 @@ app/public/
 app/web/pages/.umi/
 logs/
 run/
+
+*~
