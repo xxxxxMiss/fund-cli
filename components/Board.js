@@ -50,7 +50,7 @@ const Board = () => {
 										<Box paddingX={3}>
 											<Text
 												color={item.priceChange > 0 ? "#ff6600" : "green"}
-											>{`${item.priceChange > 0 ? "+" : "-"}${
+											>{`${item.priceChange > 0 ? "+" : ""}${
 												item.priceChange
 											}`}</Text>
 										</Box>

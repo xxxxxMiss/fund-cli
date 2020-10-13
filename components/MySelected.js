@@ -5,6 +5,7 @@ const importJsx = require("import-jsx");
 const TextInput = require("ink-text-input").default;
 const { get } = require("../lib/request");
 const Table = importJsx("./Table");
+const Hot = importJsx("./Hot");
 const figures = require("figures");
 
 const MySelected = (props) => {
@@ -43,7 +44,7 @@ const MySelected = (props) => {
 
 	useInput((input, key) => {
 		let currentCode = null;
-		const codes = code.split(/[,，]/)
+		const codes = code.split(/[,，]/);
 		if (input === " " && list[row]) {
 			if (props.selected.has((currentCode = list[row].code))) {
 				props.setSelected((prev) => {
@@ -63,8 +64,14 @@ const MySelected = (props) => {
 	});
 
 	const handleKeywordChange = (value) => {
-		setKeyword(value.replace(/[^0-9,，]/, '').replace('，', ','))
-	}
+		if (value || value === 0) {
+			setKeyword(
+				String(value)
+					.replace(/[^0-9,，]/, "")
+					.replace("，", ",")
+			);
+		}
+	};
 
 	const columns = [
 		{
@@ -107,19 +114,22 @@ const MySelected = (props) => {
 		},
 	];
 
-	return (
-		<Box flexDirection="column">
-			<Box width={30} marginBottom={2} borderStyle="round" borderColor="cyan">
-				<TextInput
-					placeholder="输入基金代码查询"
-					value={keyword}
-					onChange={handleKeywordChange}
-					onSubmit={(value) => setCode(value)}
-				/>
+	if (props.selected.size) {
+		return (
+			<Box flexDirection="column">
+				<Box width={30} marginBottom={2} borderStyle="round" borderColor="cyan">
+					<TextInput
+						placeholder="输入基金代码查询"
+						value={keyword}
+						onChange={handleKeywordChange}
+						onSubmit={(value) => setCode(value)}
+					/>
+				</Box>
+				<Table columns={columns} data={list} onRow={setRow} />
 			</Box>
-			<Table columns={columns} data={list} onRow={setRow} />
-		</Box>
-	);
+		);
+	}
+	return <Hot />;
 };
 
 module.exports = MySelected;
