@@ -39,7 +39,9 @@ const Board = () => {
 								>
 									<Box>
 										<Text>{item.name}</Text>
-										<Text color="#666">{item.code}</Text>
+										<Box paddingLeft={1}>
+											<Text color="#666">{item.code}</Text>
+										</Box>
 									</Box>
 									<Box marginTop={1}>
 										<Box>
