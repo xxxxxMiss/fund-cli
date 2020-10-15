@@ -18,6 +18,7 @@
 		"components/*",
 		"demo.gif"
 	],
+	"keywords":["react", "fund", "cli", "ink", "terminal"],
 	"dependencies": {
 		"axios": "^0.20.0",
 		"figures": "^3.2.0",
