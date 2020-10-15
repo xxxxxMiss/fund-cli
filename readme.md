@@ -2,7 +2,7 @@
 
 > fund-cli 是一款在终端查看基金情况的 cli 工具
 
-![demo]('/demo.gif')
+![demo]('https://github.com/xxxxxMiss/fund-cli/raw/master/demo.gif')
 
 ## Install
 
