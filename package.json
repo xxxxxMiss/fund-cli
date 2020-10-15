@@ -1,6 +1,6 @@
 {
 	"name": "@qschqd/fund-cli",
-	"version": "0.1.3",
+	"version": "0.2.3",
 	"license": "MIT",
 	"bin": {
 		"fund": "cli.js"
@@ -15,7 +15,8 @@
 		"cli.js",
 		"ui.js",
 		"lib/*",
-		"components/*"
+		"components/*",
+		"demo.gif"
 	],
 	"dependencies": {
 		"axios": "^0.20.0",
