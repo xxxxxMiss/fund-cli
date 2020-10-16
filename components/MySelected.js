@@ -6,6 +6,7 @@ const TextInput = require("./ink-text-input").default;
 const { get } = require("../lib/request");
 const Table = importJsx("./Table");
 const Hot = importJsx("./Hot");
+const NumberInput = importJsx('./NumberInput')
 const figures = require("figures");
 
 const MySelected = (props) => {
@@ -73,6 +74,8 @@ const MySelected = (props) => {
 		}
 	};
 
+	const [currentPortion, setCurrentPortion] = useState("");
+
 	const columns = [
 		{
 			width: "20%",
@@ -85,7 +88,7 @@ const MySelected = (props) => {
 			title: "净值",
 		},
 		{
-			width: "20%",
+			width: "10%",
 			dataIndex: "expectWorth",
 			title: "估值",
 		},
@@ -98,6 +101,20 @@ const MySelected = (props) => {
 					<Text color="cyan">
 						{item.expectWorthDate ? item.expectWorthDate.slice(0, -3) : "--"}
 					</Text>
+				);
+			},
+		},
+		{
+			width: "20%",
+			title: "持有份额",
+			key: "portion",
+			render: (_, __, i) => {
+				return (
+					<NumberInput
+						onSubmit={(value) => {
+						}}
+						focus={row === i}
+					/>
 				);
 			},
 		},
@@ -123,6 +140,7 @@ const MySelected = (props) => {
 						value={keyword}
 						onChange={handleKeywordChange}
 						onSubmit={(value) => setCode(value)}
+						focus={row < 0 || row >= list.length}
 					/>
 				</Box>
 				<Table columns={columns} data={list} onRow={setRow} />

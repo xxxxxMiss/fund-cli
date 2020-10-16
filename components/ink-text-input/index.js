@@ -53,8 +53,6 @@ const TextInput = ({ value: originalValue, placeholder = '', focus = true, mask,
     ink_1.useInput((input, key) => {
         if (key.upArrow ||
             key.downArrow ||
-            key.escape ||
-            input === ' ' ||
             (key.ctrl && input === 'c') ||
             key.tab ||
             (key.shift && key.tab)) {

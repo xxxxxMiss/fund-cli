@@ -6,22 +6,22 @@ const Table = ({ columns, data, onRow }) => {
 	const [row, setRow] = useState(-1);
 
 	useInput((input, key) => {
-		if (input === 'k') {
+		if (input === "k") {
 			setRow((prev) => {
 				const newVal = prev < 0 ? prev : prev - 1;
 				if (newVal >= 0 && newVal < data.length) {
-					onRow(newVal)
+					onRow(newVal);
 				}
-				return newVal
+				return newVal;
 			});
 		}
-		if (input === 'j') {
+		if (input === "j") {
 			setRow((prev) => {
 				const newVal = prev < 10 ? prev + 1 : prev;
 				if (newVal >= 0 && newVal < data.length) {
-					onRow(newVal)
+					onRow(newVal);
 				}
-				return newVal
+				return newVal;
 			});
 		}
 	});
@@ -37,7 +37,7 @@ const Table = ({ columns, data, onRow }) => {
 			</Box>
 			{data.map((item, index) => {
 				return (
-					<Box width="100%" key={index} marginBottom={1}>
+					<Box width="100%" key={index} marginBottom={1} alignItems="center">
 						{columns.map((it, i) => {
 							return (
 								<Box flexGrow={1} width={it.width} key={it.dataIndex || it.key}>
